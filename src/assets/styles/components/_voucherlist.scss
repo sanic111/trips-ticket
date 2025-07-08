@@ -1,0 +1,29 @@
+
+@use "@styles/utils" as *;
+.listWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+ 
+  font-size:  $font-size-xs;
+  color:  $text-color-muted;
+
+  /* Chrome, Safari, Edge */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Nền trắng, nếu cần distinguish với background chung */
+  background-color: #ffffff;
+.note{
+  font-size: $font-size-sm;
+}
+  .voucher {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+     overflow-x: auto;
+  scrollbar-width: none;
+  }
+}

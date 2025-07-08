@@ -1,0 +1,17 @@
+.searchPage {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.tripListWrapper {
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+.loadingMore {
+  text-align: center;
+  padding: 16px;
+  color: #666;
+  font-size: 14px;
+}
+

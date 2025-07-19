@@ -1,0 +1,291 @@
+@use "@styles/utils" as *;
+.topBar {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 1rem;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 12px gray;
+
+    .route {
+        font-size: $font-size-base;
+        @include flex-align-center;
+        margin-bottom: 0.5rem;
+        gap: 6px;
+        .icon {
+            margin-left: 0.25rem;
+        }
+        .backIcon {
+            @include icon-size-under(321px, 25px);
+        }
+
+        .locationnclose {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .pick {
+                font-weight: $font-weight-bold;
+                font-size: $font-size-md;
+                @include responsive-under(350px) {
+                    font-size: $font-size-base;
+                }
+            }
+
+            .locationrange {
+                font-size: $font-size-base;
+                width: 90%;
+                @include overflow-hidden;
+                @include hide-scrollbar;
+                // @include  downstream-allow;
+                @include responsive-under(350px) {
+                    font-size: $font-size-sm;
+                }
+            }
+            .close {
+                background-color: $background-color3;
+                border-radius: $border-radius-full;
+                padding: 3px 8px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+
+                .leftGroup {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                }
+
+                .iconButton {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+
+                    svg,
+                    img {
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+
+                .closeButton {
+                    svg,
+                    img {
+                        width: 30px;
+                        height: 30px;
+                    }
+                }
+
+                @include responsive-under(350px) {
+                    padding: 2px 6px;
+                    gap: 0.25rem;
+
+                    .leftGroup {
+                        gap: 0.5rem;
+                    }
+
+                    .iconButton {
+                        svg,
+                        img {
+                            width: 16px;
+                            height: 16px;
+                        }
+                    }
+
+                    .closeButton {
+                        svg,
+                        img {
+                            width: 28px;
+                            height: 28px;
+                        }
+                    }
+                }
+                @include responsive-under(321px) {
+                    padding: 2px 6px;
+                    gap: 0.25rem;
+
+                    .leftGroup {
+                        gap: 0.5rem;
+                    }
+
+                    .iconButton {
+                        svg,
+                        img {
+                            width: 15px;
+                            height: 15px;
+                        }
+                    }
+
+                    .closeButton {
+                        svg,
+                        img {
+                            width: 20px;
+                            height: 20px;
+                        }
+                    }
+                }
+            }
+
+            @include responsive-beyonce(700px) {
+                .locationnclose {
+                    padding: 3rem;
+                }
+            }
+        }
+    }
+
+    .dateList {
+        display: flex;
+        overflow-x: auto;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+
+        @include hide-scrollbar;
+    }
+
+    .filterRow {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.25rem;
+        justify-content: space-between;
+    }
+
+    .discountRow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+
+        .discode {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: $font-size-sm;
+        }
+        .distext {
+            font-size: $font-size-base;
+            font-weight: $font-weight-semibold;
+            white-space: nowrap;
+            font-size: $font-size-sm;
+        }
+
+        .discountBadge {
+            background-color: #6cb585;
+            color: #e0f7e9;
+            font-weight: $font-weight-bold;
+            padding: 0.1rem 1rem;
+            border-radius: 20px;
+            font-size: $font-size-xs;
+            width: fit-content;
+            height: fit-content;
+        }
+
+        .morenicon {
+            .seeMore {
+                color: $primary-color;
+                cursor: pointer;
+                font-weight: $font-weight-bold;
+                font-size: $font-size-sm;
+                gap: 0.25rem;
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        // Trường hợp đặc biệt từ 401px – 417px
+        @media (min-width: 401px) and (max-width: 417px) {
+            grid-template-columns: auto auto auto;
+            .distext {
+                white-space: nowrap;
+                margin-right: 0.25rem;
+            }
+            .discountBadge {
+                margin-right: 0.25rem;
+            }
+        }
+
+        //  Cho phép xuống dòng ở width nhỏ hơn 400px
+        @media (max-width: 400px) {
+            grid-template-columns: 1fr;
+            grid-row-gap: 0.25rem;
+            text-align: left;
+
+            .distext {
+                white-space: normal; // Cho phép xuống dòng
+            }
+
+            .discountBadge {
+                justify-self: start;
+                font-size: 0.5rem;
+            }
+
+            .morenicon {
+                justify-self: start;
+            }
+        }
+    }
+}
+
+.dateItem {
+    min-width: 48px;
+    text-align: center;
+    padding: 0.25rem 0.2rem;
+    border-radius: 8px;
+    justify-content: center;
+    font-size: $font-size-sm;
+    cursor: pointer;
+
+    &.active {
+        background-color: $primary-color;
+        color: white;
+        border-color: #007aff;
+        font-weight: $font-weight-bold;
+    }
+
+    .day {
+        font-size: $font-size-md;
+        font-weight: $font-weight-bold;
+    }
+
+    .date {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-regular;
+        color: #ccc;
+    }
+}
+
+.filterButton {
+    border: 1px solid #ccc;
+    border-radius: $border-radius-med;
+    padding: 0.35rem 0.75rem; // tăng nhẹ chiều cao để icon không bị chạm viền
+    font-size: $font-size-sm;
+    background-color: $background-color;
+    margin-right: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    line-height: 1; // rất quan trọng để icon và chữ thẳng hàng chính xác
+
+    &.active {
+        background-color: $primary-color;
+        color: white;
+        border-color: #007aff;
+        font-weight: $font-weight-regular;
+    }
+}
+
+@include responsive-under(350px) {
+    .filterButton {
+        font-size: $font-size-xs;
+    }
+}

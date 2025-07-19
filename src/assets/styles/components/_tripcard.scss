@@ -1,0 +1,300 @@
+@use "@styles/utils" as *;
+/* Info wrapper */
+.info {
+    padding: $spacing-medium 16px;
+    @include flex-column;
+    justify-content: space-between;
+
+    @include mobile {
+        padding: $spacing-medium;
+    }
+}
+
+/* Header: logo + tên hãng + rating */
+.tripCardHeader {
+    gap: $spacing-medium;
+
+    .logo {
+        display: flex;
+        gap: $spacing-medium;
+
+        .imageWrapper {
+            @include box(50px);
+            border-radius: $border-radius-med;
+            overflow: hidden;
+            flex-shrink: 0;
+
+            .image {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+
+        .textBlock {
+            @include flex-column;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .nameRow {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+
+            justify-content: space-between;
+
+            .ratingnheart {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+
+                .rating {
+                    font-size: $font-size-sm;
+                    height: fit-content;
+                    align-items: center;
+                }
+
+                .heartIcon {
+                    flex-shrink: 0;
+                }
+
+                @include responsive-under(391px) {
+                    gap: 4px;
+
+                    .rating {
+                        font-size: $font-size-sm;
+                    }
+
+                    .heartIcon {
+                        width: 26px;
+                        height: 26px;
+                    }
+
+                    padding-right: 4px; // Thêm padding nếu bị sát cạnh
+                    max-width: 100%; // Đảm bảo không tràn
+                    overflow: hidden; // Tránh icon bị render tràn
+                }
+            }
+
+            .name {
+                font-size: $font-size-base;
+                // font-weight:  $font-weight-bold;
+                color: #222;
+                flex-shrink: 1;
+                @include overflow-hidden;
+                @include hide-scrollbar;
+                @include responsive-under(391px) {
+                    font-size: $font-size-base;
+                }
+                @include responsive-under(321px) {
+                    max-width: 120px;
+                }
+            }
+        }
+
+        .rating {
+            font-size: $font-size-sm;
+            color: black;
+            font-weight: $font-weight-semibold;
+            background-color: $background-color;
+            border-radius: $border-radius-sm;
+            padding: 6px;
+            flex-shrink: 0;
+            width: fit-content;
+            display: inline-flex;
+            line-height: 1;
+            height: 20px;
+        }
+
+        .heartIcon {
+            width: 26px;
+            height: 26px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+
+    @include mobile {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 12px;
+
+        .rating {
+            margin-left: 0;
+        }
+    }
+}
+
+/* Meta info  */
+.meta {
+    display: inline-block;
+    width: fit-content;
+    // white-space: nowrap;
+    @include downstream-allow;
+    margin-top: $spacing-tiny;
+    font-size: $font-size-xs;
+    color: $secondary-color;
+    background-color: $background-color;
+    border-radius: $border-radius-sm;
+    padding: 2px 2px;
+    align-self: flex-start;
+    max-width: 170px;
+    overflow-x: auto;
+
+    @include hide-scrollbar;
+    @include responsive-under(391px) {
+        font-size: $font-size-xs;
+    }
+}
+
+.timeline {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: start;
+    padding: 5px 15px;
+    margin-top: 10px;
+    border-radius: $border-radius-lg;
+    background: linear-gradient(to right, $background-color2 0%, #fff 50%, $background-color2 100%);
+    gap: $spacing-small;
+
+    .timeBlockLeft,
+    .timeBlockRight {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        min-width: 80px;
+        font-size: $font-size-base;
+
+        time {
+            // margin-bottom: 4px;
+
+            strong {
+                font-size: $font-size-xl;
+                color: #222;
+                font-weight: $font-weight-bold;
+            }
+        }
+
+        address {
+            color: #3b3b3b;
+            font-style: normal;
+            font-weight: $font-weight-semibold;
+            line-height: 1.3;
+        }
+        @include responsive-under(391px) {
+            font-size: $font-size-sm;
+            time strong {
+                font-size: $font-size-xl;
+            }
+        }
+    }
+    .timeBlockRight {
+        align-items: flex-end;
+        text-align: right;
+    }
+
+    .rule {
+        justify-self: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-width: 60px;
+        font-size: $font-size-base;
+        margin: 10px 0;
+
+        a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+
+            .detail {
+                color: $primary-color;
+                font-weight: $font-weight-semibold;
+                @include downstream-allow;
+
+                @include responsive-under(364px) {
+                    text-align: center;
+                }
+            }
+        }
+
+        .duration {
+            font-weight: $font-weight-semibold;
+            background-color: $background-color;
+            padding: 2px 10px;
+            border-radius: $border-radius-full;
+            color: #908e8e;
+            display: flex;
+            align-items: center;
+            font-size: $font-size-sm;
+
+            .icon {
+                display: inline;
+            }
+        }
+
+        @media (max-width: 340px) {
+            .duration .icon {
+                display: none;
+            }
+        }
+
+        svg {
+            vertical-align: middle;
+            margin-inline: 4px;
+            height: 1em;
+        }
+    }
+}
+
+.tripCardFooter {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.priceGroup {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.discountedPrice {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e4894;
+}
+
+.originalPrice {
+    font-size: 14px;
+    font-weight: 400;
+    color: #6b7280;
+    text-decoration: line-through;
+}
+
+.promo {
+    padding: 3px;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-base;
+    border-width: 1px;
+    border-color: orange;
+    border-style: solid;
+
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    display: inline-block;
+    @include responsive-under(321px) {
+        // max-width: 185px;
+        font-size: $font-size-sm;
+    }
+}

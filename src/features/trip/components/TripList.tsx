@@ -87,7 +87,7 @@ const TripList = forwardRef<TripListHandle, TripListProps>(
     const hasMore = visibleTrips.length < filteredTripsRef.current.length;
 
     return (
-      <div ref={containerRef} style={{ overflowY: "auto", height: "100%" }}>
+      <div ref={containerRef} style={{ overflowY: "auto", height: "100%", paddingTop: "2rem" }}>
         {visibleTrips.length === 0 ? (
           <div style={{ textAlign: "center", padding: "2rem" }}>
             {t("noTripsFound")}

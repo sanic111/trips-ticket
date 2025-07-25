@@ -14,8 +14,12 @@ const SearchPage: React.FC = () => {
 
     return (
         <div className="searchPage">
-            <TopBarWrapper rawTrips={rawTrips} />
-            <TripListWrapper rawTrips={rawTrips} />
+            <div className="topBarWrapper">
+                <TopBarWrapper rawTrips={rawTrips} />
+            </div>
+            <div className="tripListWrapper">
+                <TripListWrapper rawTrips={rawTrips} />
+            </div>
         </div>
     );
 };

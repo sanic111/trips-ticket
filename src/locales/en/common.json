@@ -1,0 +1,45 @@
+{
+    "search": "Search",
+    "departure": "Departure",
+    "destination": "Destination",
+    "price": "Fare",
+    "book": "Book",
+    "regulationDetails": "Regulation Details",
+    "hours": "h",
+    "promoMessage": "Free 50K Taxi/Bike code",
+    "loadingMore": "Loading more...",
+    "noTripsFound": "No trips found",
+    "myPromo": "My promo code",
+    "expand": "Expand",
+    "collapse": "Collapse",
+
+    "topbar": {
+        "selectTrip": "Choose your trip",
+    "routeExample": "Thua Thien Hue - Ho Chi Minh",
+        "sort": {
+            "departureTime": "Time",
+            "fare": "Fare",
+            "rating": "Rating"
+        },
+        "filter": "Filter"
+    },
+    "notes": "Note that the prices here are provisional/seat prices, not the official price",
+    "voucherCard": {
+        "discount": "Discount {{percent}}% up to {{amount}} ",
+        "minTransaction": "Applies to transactions from {{amount}} ",
+        "expiry": "Expiry: {{date}}",
+        "apply": "Apply",
+        "cancel": "Cancel"
+    },
+    "filter": {
+  "title": "Filter",
+  "operators": "Operators",
+  "viewAll": "View all",
+  "clear": "Clear",
+  "apply": "Apply",
+  "vehicleTypes": "Vehicle types",
+  "departureTime": "Departure time",
+  "fareRange": "Fare range"
+
+}
+}

@@ -1,22 +1,52 @@
-import React from "react";
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import Icon from "@/assets/icons/Icon";
 
-type Props = {
-    name: string;
-    image?: string;
-    selected: boolean;
-    onClick: () => void;
-};
+export interface OperatorItemHandle {
+  get: () => boolean;
+  set: (v: boolean) => void;
+}
 
-const BusOperatorItem = ({name, image, selected, onClick}: Props) => {
+interface Props {
+  name: string;
+  image?: string;
+  translatedName: string;
+}
+
+const BusOperatorItem = forwardRef<OperatorItemHandle, Props>(
+  ({ name, image, translatedName }, ref) => {
+    const selectedRef = useRef(false);
+    const [, setRender] = useState(0);
+    const forceUpdate = () => setRender((r) => r + 1);
+
+    const toggle = () => {
+      selectedRef.current = !selectedRef.current;
+      forceUpdate();
+    };
+
+    useImperativeHandle(ref, () => ({
+      get: () => selectedRef.current,
+      set: (v) => {
+        selectedRef.current = v;
+        forceUpdate();
+      },
+    }));
+
     return (
-        <div className="item" onClick={onClick}>
-            <img src={image} alt={name} />
-            <span>{name}</span>
-            <Icon name={selected ? "selected" : "select"} className="selectIcon" />
-        </div>
+      <div className="item" onClick={toggle}>
+        {image && <img src={image} alt={name} />}
+        <span>{translatedName}</span>
+        <Icon
+          name={selectedRef.current ? "selected" : "select"}
+          className="selectIcon"
+        />
+      </div>
     );
-};
+  }
+);
 
 export default BusOperatorItem;
-

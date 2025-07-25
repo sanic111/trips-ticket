@@ -1,4 +1,4 @@
-import React, { useState, useRef, useImperativeHandle, forwardRef, useEffect, useLayoutEffect } from "react";
+import React, { useState, useRef, useImperativeHandle, forwardRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import rawData from "@/data/locchuyenxe.json";
 import SectionOperators, { type SectionOperatorsHandle } from "./Item/SectionOperators";
@@ -10,7 +10,7 @@ import { IoClose } from "react-icons/io5";
 import type { Trip } from "@/features/trip/model/trip.types";
 import type { FilterState } from "@/types/filter.types";
 import { PRICE_RANGE_LIMIT } from "@/features/trip/model/filter.constants";
-
+import { useTranslation } from "react-i18next"; 
 const CloseIcon = () => <IoClose />;
 const TRIPS: Trip[] = rawData.json.coreData.data;
 
@@ -30,6 +30,7 @@ export interface TripFilterPopupHandle {
 }
 
 const TripFilterPopup = forwardRef<TripFilterPopupHandle>((_, ref) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [currentFilter, setCurrentFilter] = useState<FilterState>(DEFAULT_FILTER);
 
@@ -39,12 +40,6 @@ const TripFilterPopup = forwardRef<TripFilterPopupHandle>((_, ref) => {
   const priceRef = useRef<SectionPriceRangeHandle>(null);
   const busOperatorPopupRef = useRef<BusOperatorPopupHandle>(null);
 
-  // Debug helper
-  const logState = (label: string, filter: FilterState) => {
-    console.log(`[Filter Debug] ${label}:`, JSON.stringify(filter));
-  };
-
-  // Khi popup mở, restore UI từ currentFilter
   useEffect(() => {
     if (!isOpen) return;
     const restored = { ...currentFilter };
@@ -52,24 +47,19 @@ const TripFilterPopup = forwardRef<TripFilterPopupHandle>((_, ref) => {
     typesRef.current?.setState(restored.vehicleTypes);
     timesRef.current?.setState(restored.departureTimes);
     priceRef.current?.setState(restored.priceRange ?? PRICE_RANGE_LIMIT);
-    logState('restore on mount', restored);
   }, [isOpen]);
 
   useImperativeHandle(ref, () => ({
     open: () => {
       setIsOpen(true);
-      logState('open request', currentFilter);
     },
     close: () => handleClose(),
     setInitialFilter: (filter) => {
       setCurrentFilter(filter);
-      logState('setInitialFilter', filter);
     },
   }));
 
-
-    const handleReset = () => {
-    // Chỉ xóa lựa chọn, không đóng popup
+  const handleReset = () => {
     const resetFilter = DEFAULT_FILTER;
     setCurrentFilter(resetFilter);
     operatorRef.current?.reset();
@@ -77,7 +67,6 @@ const TripFilterPopup = forwardRef<TripFilterPopupHandle>((_, ref) => {
     timesRef.current?.reset();
     priceRef.current?.reset();
     window.dispatchEvent(new CustomEvent("trip-filter-apply", { detail: resetFilter }));
-    logState('reset', resetFilter);
   };
 
   const handleApply = () => {
@@ -89,7 +78,6 @@ const TripFilterPopup = forwardRef<TripFilterPopupHandle>((_, ref) => {
       sortField: currentFilter.sortField,
       sortDirection: currentFilter.sortDirection,
     };
-    logState('apply (newFilter)', newFilter);
     setCurrentFilter(newFilter);
     window.dispatchEvent(new CustomEvent("trip-filter-apply", { detail: newFilter }));
     setIsOpen(false);
@@ -106,7 +94,6 @@ const TripFilterPopup = forwardRef<TripFilterPopupHandle>((_, ref) => {
     };
     setCurrentFilter(tempFilter);
     setIsOpen(false);
-    logState('close (saved)', tempFilter);
   };
 
   const handleShowAll = () => {
@@ -124,7 +111,6 @@ const TripFilterPopup = forwardRef<TripFilterPopupHandle>((_, ref) => {
       operatorRef.current?.setState(updatedOps);
       const temp = { ...currentFilter, operators: updatedOps };
       setCurrentFilter(temp);
-      logState('operator-filter-apply', temp);
     };
     window.addEventListener("operator-filter-apply", handleOperatorApply);
     return () => window.removeEventListener("operator-filter-apply", handleOperatorApply);
@@ -150,14 +136,15 @@ const TripFilterPopup = forwardRef<TripFilterPopupHandle>((_, ref) => {
               transition={{ type: "tween", duration: 0.3 }}
             >
               <div className="tripFilterHeader">
-                <span style={{ marginBottom: "8px" }}>Lọc</span>
+                <span style={{ marginBottom: "8px" }}>{t("filter.title")}</span>
                 <button onClick={handleClose}>
                   <CloseIcon />
                 </button>
               </div>
+
               <div className="sectionHeader">
-                <h4>Nhà xe</h4>
-                <button onClick={handleShowAll}>Xem tất cả</button>
+                <h4>{t("filter.operators")}</h4>
+                <button onClick={handleShowAll}>{t("filter.viewAll")}</button>
               </div>
 
               <SectionOperators ref={operatorRef} trips={TRIPS} />
@@ -168,10 +155,10 @@ const TripFilterPopup = forwardRef<TripFilterPopupHandle>((_, ref) => {
               <div className="tripFilterFooter">
                 <div className="tripFilterButton">
                   <button className="clearBtn" onClick={handleReset}>
-                    Xóa lọc
+                    {t("filter.clear")}
                   </button>
                   <button className="applyBtn" onClick={handleApply}>
-                    Áp dụng
+                    {t("filter.apply")}
                   </button>
                 </div>
               </div>

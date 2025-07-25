@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, forwardRef, useCallback, memo} from "react";
 
 import DateList, {type DateListHandle} from "@/components/Topbar/DateList";
-import SortOptionsGroup from "@/components/Topbar/SortOptionsGroup";
+import SortOptionsGroup, { type SortOptionsGroupHandle } from "@/components/Topbar/SortOptionsGroup";
 import VoucherSection from "@/components/Topbar/VoucherSection";
 import FilterButtonGroup, {type FilterButtonGroupHandle} from "./FilterButtonGroup";
 import TripFilterPopup, {type TripFilterPopupHandle} from "../../features/trip/components/PopUp/TripFilterPopup";
@@ -11,6 +11,8 @@ import Icon from "@/assets/icons/Icon";
 import {PiDotsThreeOutlineFill} from "react-icons/pi";
 
 import type {Trip} from "@/features/trip/model/trip.types";
+import LanguageSwitcher from "../LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 export type TopBarProps = {
     trips: Trip[];
@@ -46,11 +48,13 @@ function generateDateListFromTrips(trips: Trip[] = []) {
 const TopBar = forwardRef<HTMLDivElement, TopBarProps>(({trips, onDateChange}, ref) => {
     const dates = generateDateListFromTrips(trips);
     const filterButtonGroupRef = useRef<FilterButtonGroupHandle>(null);
-    const sortGroupRef = useRef<SortOptionsGroup>(null);
+    const sortGroupRef = useRef<SortOptionsGroupHandle>(null);
     const filterPopupRef = useRef<TripFilterPopupHandle>(null);
     const operatorPopupRef = useRef<BusOperatorPopupHandle>(null);
     const servicePopupRef = useRef<ServicePopupHandle>(null);
     const dateListRef = useRef<DateListHandle>(null);
+
+    const {t} = useTranslation();
 
     // Reset DateList khi trips thay đổi
     useEffect(() => {
@@ -93,8 +97,9 @@ const TopBar = forwardRef<HTMLDivElement, TopBarProps>(({trips, onDateChange}, r
                 </div>
                 <div className="locationnclose">
                     <div>
-                        <div className="pick">Chọn chuyến đi</div>
-                        <div className="locationrange">Thừa Thiên Huế - Hồ Chí Minh</div>
+                        <div className="pick">{t("topbar.selectTrip")}</div>
+                        <div className="locationrange">{t("topbar.routeExample")}</div>
+                        <LanguageSwitcher />
                     </div>
                     <div className="close">
                         <div className="leftGroup">

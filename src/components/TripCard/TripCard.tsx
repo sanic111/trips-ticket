@@ -1,8 +1,10 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import type { Trip } from "@/features/trip/model/trip.types";
 import Icon from "@/assets/icons/Icon";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-
+import { useDynamicTranslation } from "@/ultils/useDynamicTranslation";
+import { formatCurrency } from "@/ultils/formatCurrency";
 export type TripCardProps = {
   trip: Trip;
   uuid: string;
@@ -12,6 +14,9 @@ export type TripCardProps = {
 
 const TripCard: React.FC<TripCardProps> = React.memo(
   ({ trip, uuid, isFavorite, onToggleFavorite }) => {
+    const { t, i18n } = useTranslation();
+    const { translateLocation, translateOperator } = useDynamicTranslation();
+
     const {
       departure_time,
       drop_off_time,
@@ -24,14 +29,14 @@ const TripCard: React.FC<TripCardProps> = React.memo(
       transport_information,
     } = trip;
 
-    // Memoize expensive calculations
     const tripData = React.useMemo(() => {
       const duration = Math.ceil(duration_in_min / 60);
       const discountedPrice = fare_amount - discount_amount;
       const hasDiscount = discount_amount > 0;
-      const formattedDiscounted = discountedPrice.toLocaleString("vi-VN");
-      const formattedOriginal = fare_amount.toLocaleString("vi-VN");
-      
+
+      const formattedDiscounted = formatCurrency(discountedPrice, i18n.language);
+      const formattedOriginal = formatCurrency(fare_amount, i18n.language);
+
       return {
         duration,
         discountedPrice,
@@ -39,9 +44,8 @@ const TripCard: React.FC<TripCardProps> = React.memo(
         formattedDiscounted,
         formattedOriginal,
       };
-    }, [fare_amount, discount_amount, duration_in_min]);
+    }, [fare_amount, discount_amount, duration_in_min, i18n.language]);
 
-    // Memoize click handler để tránh re-render con
     const handleToggleFavorite = React.useCallback(() => {
       onToggleFavorite(uuid);
     }, [onToggleFavorite, uuid]);
@@ -61,7 +65,7 @@ const TripCard: React.FC<TripCardProps> = React.memo(
               <div className="textBlock">
                 <div className="nameRow">
                   <div className="name">
-                    {transport_information.name}
+                    {translateOperator(transport_information.name)}
                   </div>
                   <div className="ratingnheart">
                     <span className="rating">
@@ -90,15 +94,16 @@ const TripCard: React.FC<TripCardProps> = React.memo(
               <time dateTime={departure_time}>
                 <strong>{departure_time}</strong>
               </time>
-              <address>{merchant_start_point_name}</address>
+              <address>{translateLocation(merchant_start_point_name)}</address>
             </div>
 
             <div className="rule">
               <a href="#">
-                <div className="detail">Chi tiết quy định</div>
+                <div className="detail">{t("regulationDetails")}</div>
                 <strong className="duration">
                   <MdKeyboardDoubleArrowRight className="icon" />
-                  {tripData.duration}g
+                  {tripData.duration}
+                  {t("hours")}
                   <MdKeyboardDoubleArrowRight className="icon" />
                 </strong>
               </a>
@@ -108,32 +113,31 @@ const TripCard: React.FC<TripCardProps> = React.memo(
               <time dateTime={drop_off_time}>
                 <strong>{drop_off_time}</strong>
               </time>
-              <address>{merchant_end_point_name}</address>
+              <address>{translateLocation(merchant_end_point_name)}</address>
             </div>
           </section>
 
           <div className="tripCardFooter">
             <div className="priceGroup">
               <span className="discountedPrice">
-                {tripData.formattedDiscounted}₫
+                {tripData.formattedDiscounted}
               </span>
               {tripData.hasDiscount && (
                 <span className="originalPrice">
-                  {tripData.formattedOriginal}₫
+                  {tripData.formattedOriginal}
                 </span>
               )}
             </div>
-            <button className="button">Đặt vé</button>
+            <button className="button">{t("book")}</button>
           </div>
 
           <aside className="promo">
-            <span>Tặng mã 50K gọi Taxi/Bike</span>
+            <span>{t("promoMessage")}</span>
           </aside>
         </div>
       </article>
     );
   },
-  // Custom comparison function để optimize re-rendering
   (prevProps, nextProps) => {
     return (
       prevProps.trip.uuid === nextProps.trip.uuid &&

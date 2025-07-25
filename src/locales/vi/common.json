@@ -1,0 +1,45 @@
+{
+  "search": "Tìm kiếm",
+  "departure": "Điểm đi",
+  "destination": "Điểm đến", 
+  "price": "Giá vé",
+  "book": "Đặt vé",
+  "regulationDetails": "Chi tiết quy định",
+  "hours": "g",
+  "promoMessage": "Tặng mã 50K gọi Taxi/Bike",
+  "loadingMore": "Đang tải thêm...",
+  "noTripsFound": "Không tìm thấy chuyến xe nào",
+  "myPromo": "Mã giảm giá của tôi",
+  "expand": "Xem thêm",
+  "collapse": "Thu gọn",
+  "topbar": {
+    "selectTrip": "Chọn chuyến đi",
+    "routeExample": "Thừa Thiên Huế - Hồ Chí Minh",
+    "sort": {
+      "departureTime": "Giờ chạy",
+      "fare": "Giá vé",
+      "rating": "Đánh giá"
+    },
+    "filter": "Lọc"
+  },
+  "notes": "Lưu ý các mức giá ở đây là mức giá tạm tính/ghế, chưa phải giá chính thức",
+  "voucherCard": {
+  "discount": "Giảm {{percent}}% tối đa {{amount}} ",
+  "minTransaction": "Áp dụng cho giao dịch từ {{amount}} ",
+  "expiry": "HSD: {{date}}",
+  "apply": "Áp dụng",
+  "cancel": "Hủy bỏ"
+},
+"filter": {
+  "title": "Lọc",
+  "operators": "Nhà xe",
+  "viewAll": "Xem tất cả",
+  "clear": "Xóa lọc",
+  "apply": "Áp dụng",
+  "vehicleTypes": "Loại xe",
+  "departureTime": "Giờ đi",
+  "fareRange": "Khoảng giá"
+
+}
+
+}

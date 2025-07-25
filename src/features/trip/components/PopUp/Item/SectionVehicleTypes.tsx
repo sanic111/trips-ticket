@@ -5,6 +5,7 @@ import React, {
   useState,
 } from "react";
 import { VEHICLE_TYPES } from "@/features/trip/model/filter.constants";
+import { useTranslation } from "react-i18next";
 
 export interface SectionVehicleTypesHandle {
   getState: () => string[];
@@ -44,6 +45,7 @@ const VehicleTypeItem = forwardRef(
 );
 
 const SectionVehicleTypes = forwardRef<SectionVehicleTypesHandle>((_, ref) => {
+  const { t } = useTranslation();
   const refs = useRef<Record<string, React.RefObject<ItemHandle | null>>>({});
 
   VEHICLE_TYPES.forEach((type) => {
@@ -67,7 +69,9 @@ const SectionVehicleTypes = forwardRef<SectionVehicleTypesHandle>((_, ref) => {
 
   return (
     <div className="section">
-      <div className="sectionHeader"><h4>Loại xe</h4></div>
+      <div className="sectionHeader">
+        <h4>{t("filter.vehicleTypes")}</h4>
+      </div>
       <div className="typeOptions">
         {VEHICLE_TYPES.map((type) => (
           <VehicleTypeItem key={type} ref={refs.current[type]} type={type} />

@@ -8,7 +8,7 @@ import React, {
 import type { Voucher } from "@/features/voucher/model/voucher.types";
 import { fetchMockVouchers } from "@/features/voucher/model/voucher.service";
 import VoucherCard from "./VoucherCard";
-import { VOUCHER_NOTE } from "@/features/voucher/model/voucher.constants";
+import { useTranslation } from "react-i18next";
 
 export interface VoucherListHandle {
   open: () => void;
@@ -21,6 +21,7 @@ const SESSION_KEY = "appliedVouchersSession";
 const VoucherList = forwardRef<VoucherListHandle>((_, ref) => {
   const [vouchers, setVouchers] = useState<Voucher[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation(); // Assuming useTranslation is imported from 'react-i18next'
 
   useImperativeHandle(ref, () => ({
     open: () => setIsOpen(true),
@@ -66,7 +67,7 @@ const VoucherList = forwardRef<VoucherListHandle>((_, ref) => {
 
   return (
     <div className="listWrapper">
-      <div className="note">{VOUCHER_NOTE}</div>
+      <div className="note">{t("notes")}</div>
       <div className="voucher">
         {vouchers.map((v) => (
           <VoucherCard key={v.code} voucher={v} onToggleApply={handleToggle} />
